@@ -34,8 +34,6 @@
 - (IBAction)stopRecording;
 - (IBAction)playSound;
 - (void)handleTimer;
-- (void)toggleUpdates:(id)sender;
-
 - (void)doGyroUpdate;
 
 
