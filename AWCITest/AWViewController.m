@@ -31,6 +31,7 @@
 	if (fabs(rate) > .3) {
 		float direction = rate > 0 ? 1 : -1;
 		rotation += direction * M_PI/90.0;
+    gyroLabel.text = [NSString stringWithFormat:@"%f", rate];
     NSLog(@"MOTION DETECTED! %f", rate);
 	}
 }

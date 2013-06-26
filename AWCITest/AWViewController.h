@@ -17,6 +17,7 @@
 @interface AWViewController : UIViewController <AVAudioRecorderDelegate> {
   IBOutlet UIProgressView* progressView;
   IBOutlet UILabel* lblStatusMsg;
+  IBOutlet UILabel* gyroLabel;
   
   NSMutableDictionary* recordSetting;
   NSMutableDictionary* editedObject;

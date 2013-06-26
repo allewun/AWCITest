@@ -9,12 +9,12 @@
 
 @class AWViewController;
 
-@interface AWAppDelegate : UIResponder <UIApplicationDelegate> {
-  UIWindow* window;
-  AWViewController* viewController;
+@interface AWAppDelegate : NSObject <UIApplicationDelegate> {
+  UIWindow *window;
+  AWViewController *viewController;
 }
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) AWViewController *viewController;
+@property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, retain) IBOutlet AWViewController *viewController;
 
 @end
