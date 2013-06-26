@@ -274,7 +274,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "if [ -z \"${WANT_IOS_SIM}\" ]\n\nthen\n\n#   Running under xcodebuild, so use ios-sim installed from Homebrew into /usr/local/bin/ios-sim\n\nkillall -m -KILL \"iPhone Simulator\" || true\n\nour_test_bundle_path=$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION\n\nour_env=(\"--setenv\" \"DYLD_INSERT_LIBRARIES=/../../Library/PrivateFrameworks/IDEBundleInjection.framework/IDEBundleInjection\")\n\nour_env=(\"${our_env[@]}\" \"--setenv\" \"XCInjectBundle=${our_test_bundle_path}\")\n\nour_env=(\"${our_env[@]}\" \"--setenv\" \"XCInjectBundleInto=${TEST_HOST}\")\n\nour_app_location=\"$(dirname \"${TEST_HOST}\")\"\n\n\"/usr/local/bin/ios-sim\" launch \"${our_app_location}\" \"${our_env[@]}\" --args -SenTest All \"${our_test_bundle_path}\" --exit\n\nkillall -m -KILL \"iPhone Simulator\" || true\n\nexit 0\n\nelse\n\n#   Running under Xcode\n\n\"${DEVELOPER_TOOLS_DIR}/RunUnitTests\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -392,10 +392,14 @@
 		9F8C3EEC177A720700677579 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Originate Labs";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Originate Labs";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWCITest/AWCITest-Prefix.pch";
 				INFOPLIST_FILE = "AWCITest/AWCITest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2C4F337B-74F0-439A-AE1E-5DBFB07445AA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2C4F337B-74F0-439A-AE1E-5DBFB07445AA";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -419,10 +423,13 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWCITest/AWCITest-Prefix.pch";
 				INFOPLIST_FILE = "AWCITestTests/AWCITestTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_AFTER_BUILD = YES;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -436,10 +443,13 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWCITest/AWCITest-Prefix.pch";
 				INFOPLIST_FILE = "AWCITestTests/AWCITestTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_AFTER_BUILD = YES;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -464,6 +474,7 @@
 				9F8C3EED177A720700677579 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F8C3EEE177A720700677579 /* Build configuration list for PBXNativeTarget "AWCITestTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +483,7 @@
 				9F8C3EF0177A720700677579 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
